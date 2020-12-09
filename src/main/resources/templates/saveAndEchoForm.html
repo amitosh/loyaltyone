@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Echo Text</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body bgcolor="#E6E6FA">
+
+<div id="demo">
+    <h1>Echo Form</h1>
+    <table border=1 style="width:1000px">
+        <tr>
+            <td><label>User:</label></td>
+            <td><input type="text" name="user" id="userName" size="65" maxlength="500"></td>
+        </tr>
+        <tr>
+            <td><label>City:</label></td>
+            <td><input type="text" name="city" id="city" size="65" maxlength="500"></td>
+        </tr>
+        <tr>
+            <td><label>Post:</label></td>
+            <td><textarea name="user" id="inputText" rows="4" cols="50"></textarea></td>
+        </tr>
+        <tr>
+            <td><label>User Posts:</label></td>
+            <td>
+                <div id="userPosts"></div>
+            </td>
+        </tr>
+        <tr>
+            <td><label>User City Details:</label></td>
+            <td>
+                <div id="location"></div>
+            </td>
+        </tr>
+        <tr>
+            <td><label>All Posts:</label></td>
+            <td>
+                <div id="allPosts"></div>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+    <button type="button" onclick="makeCall()">Done</button>
+</div>
+
+<script>
+        function makeCall() {
+            var xhttp;
+            xhttp=new XMLHttpRequest();
+            var userName = document.getElementById("userName").value;
+            var txt = document.getElementById("inputText").value;
+            var params = "userName=" + userName + "&text=" + txt;
+            var url = "/save";
+            xhttp.open("POST", url, true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send(params);
+
+            getUserPosts();
+            getCityDetails();
+            getAllPosts();
+        }
+
+        function getUserPosts()
+        {
+            var xhttp;
+            xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("userPosts").innerHTML  = xhttp.responseText;
+                }
+            };
+
+            var userName = document.getElementById("userName").value;
+            var url = "/userposts?userName=" + userName;
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send();
+         }
+
+        function getCityDetails()
+        {
+            var xhttp;
+            xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("location").innerHTML  = xhttp.responseText;
+                }
+            };
+
+            var city = document.getElementById("city").value;
+            var url = "/latlong?city=" + city;
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send();
+         }
+
+        function getAllPosts()
+        {
+            var xhttp;
+            xhttp=new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("allPosts").innerHTML  = xhttp.responseText;
+                }
+            };
+
+            var url = "/posts";
+            xhttp.open("GET", url, true);
+            xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhttp.send();
+         }
+
+
+</script>
+</body>
+</html>
