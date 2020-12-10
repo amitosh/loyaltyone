@@ -1,44 +1,26 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Echo Text</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-</head>
-<body bgcolor="#E6E6FA">
-
-<div id="demo">
-    <h1>Echo Form</h1>
-    <table style="width:1000px">
-        <tr>
-            <td><label>Text:</label></td>
-            <td><input type="text" name="text" id="inputText" size="50" maxlength="500"></td>
-        </tr>
-        <tr>
-            <td><label>Echo Text:</label></td>
-            <td><input type="text" id="echoText" disabled size="50" maxlength="500"></td>
-        </tr>
-    </table>
-    <br/>
-    <br/>
-    <button type="button" onclick="makeCall()">Done</button>
-</div>
-
-<script>
-        function makeCall() {
-            var xhttp;
-            xhttp=new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("echoText").setAttribute("value", xhttp.responseText);
-                }
-            };
-
-            var txt = document.getElementById("inputText").value;
-            var url = "/echotext?text=" + txt;
-            xhttp.open("GET", url, true);
-            xhttp.send();
-        }
-
-</script>
-</body>
+    <head>
+        <title>Echo Text</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <script  type="text/javascript" src="js/echo.js"></script>
+    </head>
+    <body bgcolor="#E6E6FA">
+        <div id="demo">
+            <h1>Echo Form</h1>
+            <table style="width:1000px">
+                <tr>
+                    <td><label>Text:</label></td>
+                    <td><input type="text" name="text" id="inputText" size="50" maxlength="500"></td>
+                </tr>
+                <tr>
+                    <td><label>Echo Text:</label></td>
+                    <td><input type="text" id="echoText" disabled size="50" maxlength="500"></td>
+                </tr>
+            </table>
+            <br/>
+            <br/>
+            <button type="button" onclick="makeEchoCall()">Done</button>
+        </div>
+    </body>
 </html>
